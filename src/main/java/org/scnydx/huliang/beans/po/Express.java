@@ -22,7 +22,11 @@ public class Express {
 
     private String expStatus;
 
+    private String expCode;
+
     private Integer orderId;
+
+    private Integer comId;
 
     public Integer getExpId() {
         return expId;
@@ -48,11 +52,27 @@ public class Express {
         this.expStatus = expStatus;
     }
 
+    public String getExpCode() {
+        return expCode;
+    }
+
+    public void setExpCode(String expCode) {
+        this.expCode = expCode;
+    }
+
     public Integer getOrderId() {
         return orderId;
     }
 
     public void setOrderId(Integer orderId) {
         this.orderId = orderId;
+    }
+
+    public Integer getComId() {
+        return comId;
+    }
+
+    public void setComId(Integer comId) {
+        this.comId = comId;
     }
 }

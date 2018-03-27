@@ -10,4 +10,9 @@ import org.scnydx.huliang.beans.po.Express;
  * @Modify by:
  */
 public interface IExpressService extends IBaseService<Express>{
+
+    /**
+     * 更新物流信息
+     */
+    void UpdateExpLogInfo();
 }

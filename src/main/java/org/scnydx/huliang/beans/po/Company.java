@@ -22,6 +22,8 @@ public class Company {
 
     private String comInfo;
 
+    private String comCode;
+
     private String remark;
 
     public Integer getComId() {
@@ -46,6 +48,14 @@ public class Company {
 
     public void setComInfo(String comInfo) {
         this.comInfo = comInfo;
+    }
+
+    public String getComCode() {
+        return comCode;
+    }
+
+    public void setComCode(String comCode) {
+        this.comCode = comCode;
     }
 
     public String getRemark() {

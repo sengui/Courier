@@ -21,7 +21,11 @@ public class Logistics {
 
     private String logInfo;
 
+    private String logAddress;
+
     private Date createTime;
+
+    private Integer expId;
 
     private String remark;
 
@@ -41,12 +45,28 @@ public class Logistics {
         this.logInfo = logInfo;
     }
 
+    public String getLogAddress() {
+        return logAddress;
+    }
+
+    public void setLogAddress(String logAddress) {
+        this.logAddress = logAddress;
+    }
+
     public Date getCreateTime() {
         return createTime;
     }
 
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
+    }
+
+    public Integer getExpId() {
+        return expId;
+    }
+
+    public void setExpId(Integer expId) {
+        this.expId = expId;
     }
 
     public String getRemark() {
