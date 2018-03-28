@@ -11,5 +11,10 @@ public class Contants {
     /**
      * 验证码
      */
-    public static final String VERIFYCODE = "verifyCode";
+    public static final String VERIFYCODE_PREFIX = "verifyCode:";
+
+    /**
+     * 过期时间
+     */
+    public static final int VERIFYCODE_EXPIRE = 5;
 }

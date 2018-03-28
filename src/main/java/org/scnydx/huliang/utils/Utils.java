@@ -19,7 +19,7 @@ public class Utils {
      */
     public static String getVerifyCode() {
         Integer code =  (int)((Math.random()*9 + 1)*100000);
-        logger.info("验证码：%s", code.toString());
+        logger.info("验证码：{}", code.toString());
         return code.toString();
     }
 
