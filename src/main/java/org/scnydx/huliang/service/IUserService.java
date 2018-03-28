@@ -2,6 +2,7 @@ package org.scnydx.huliang.service;
 
 import org.scnydx.huliang.base.IBaseService;
 import org.scnydx.huliang.beans.po.User;
+import org.scnydx.huliang.contants.BusiException;
 
 /**
  * @Author: CSG
@@ -16,4 +17,10 @@ public interface IUserService extends IBaseService<User> {
      * @param userPhone
      */
     void sendVerifyCode(String userPhone);
+
+    /**
+     * 注册用户
+     * @param user
+     */
+    void registerUser(User user, String code) throws BusiException;
 }

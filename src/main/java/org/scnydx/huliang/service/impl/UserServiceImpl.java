@@ -3,7 +3,9 @@ package org.scnydx.huliang.service.impl;
 import org.scnydx.huliang.base.BaseServiceImpl;
 import org.scnydx.huliang.beans.dto.VerifyCode;
 import org.scnydx.huliang.beans.po.User;
+import org.scnydx.huliang.contants.BusiException;
 import org.scnydx.huliang.contants.Contants;
+import org.scnydx.huliang.contants.ResultCode;
 import org.scnydx.huliang.dao.IUserDao;
 import org.scnydx.huliang.service.ISendSmsService;
 import org.scnydx.huliang.service.IUserService;
@@ -40,5 +42,16 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements IUserServi
         redisTemplate.opsForValue().set(Contants.VERIFYCODE_PREFIX + userPhone, code,Contants.VERIFYCODE_EXPIRE, TimeUnit.MINUTES);
         //sendSmsService.sendVerifyCodeSms(userPhone,code );
         System.out.println("验证码：" + code);
+    }
+
+    @Override
+    @Transactional(rollbackFor = RuntimeException.class)
+    public void registerUser(User user, String code) throws BusiException {
+        String verifyCode = (String) redisTemplate.opsForValue().get(Contants.VERIFYCODE_PREFIX+ user.getUserPhone());
+        if (!code.equals(verifyCode)) {
+            throw new BusiException(ResultCode.VERIFYCODE_ERROR);
+        }
+
+        userDao.insert(user);
     }
 }

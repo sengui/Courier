@@ -11,7 +11,9 @@ public enum ResultCode {
     DEFAULT_CODE(200,"请求成功"),
     INSERT_CODE(200, "添加成功"),
     UPDATE_CODE(200, "更新成功"),
-    DELETE_CODE(200, "删除成功");
+    DELETE_CODE(200, "删除成功"),
+
+    VERIFYCODE_ERROR(300, "验证码错误");
 
 
     /**
