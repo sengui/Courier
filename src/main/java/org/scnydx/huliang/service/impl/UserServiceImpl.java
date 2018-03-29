@@ -54,4 +54,34 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements IUserServi
 
         userDao.insert(user);
     }
+
+    @Override
+    public User userLogin(User user) throws Exception {
+        User userInfo = userDao.findByUserPhone(user.getUserPhone());
+        //用户不存在
+        if (userInfo == null) {
+            throw new BusiException(ResultCode.NOTUSER);
+        }
+        //密码错误
+        if (!userInfo.getUserPwd().equals(user.getUserPwd())) {
+            throw new BusiException(ResultCode.PWD_ERROE);
+        }
+
+        return userInfo;
+    }
+
+    @Override
+    public boolean isUserPhone(String userPhone) {
+        User user = userDao.findByUserPhone(userPhone);
+        if(user == null){
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    @Transactional(rollbackFor = RuntimeException.class)
+    public void updatePwd(User user) {
+        userDao.updatePwd(user);
+    }
 }

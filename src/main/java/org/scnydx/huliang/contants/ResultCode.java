@@ -13,7 +13,10 @@ public enum ResultCode {
     UPDATE_CODE(200, "更新成功"),
     DELETE_CODE(200, "删除成功"),
 
-    VERIFYCODE_ERROR(300, "验证码错误");
+    SYSTEM_ERROR(500, "系统错误"),
+    VERIFYCODE_ERROR(501, "验证码错误"),
+    NOTUSER(502, "用户不存在"),
+    PWD_ERROE(503, "密码不存在");
 
 
     /**

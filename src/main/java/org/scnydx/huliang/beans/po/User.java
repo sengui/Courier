@@ -1,5 +1,7 @@
 package org.scnydx.huliang.beans.po;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -22,6 +24,7 @@ public class User {
 
     private String userPhone;
 
+    @JsonIgnore
     private String userPwd;
 
     private String userInfo;

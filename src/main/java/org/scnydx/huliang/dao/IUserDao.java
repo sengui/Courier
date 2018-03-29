@@ -1,5 +1,7 @@
 package org.scnydx.huliang.dao;
 
+import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 import org.scnydx.huliang.beans.po.User;
 import org.scnydx.huliang.mappers.MyMapper;
 
@@ -10,4 +12,10 @@ import org.scnydx.huliang.mappers.MyMapper;
  * @Modify by:
  */
 public interface IUserDao extends MyMapper<User> {
+
+    @Select("select * from tb_user where user_phone = #{userPhone}")
+    User findByUserPhone(String userPhone);
+
+    @Update("update tb_user set user_pwd = #{userPwd} where user_phone=#{userPhone}")
+    void updatePwd(User user);
 }

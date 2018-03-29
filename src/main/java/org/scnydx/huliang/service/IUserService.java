@@ -23,4 +23,25 @@ public interface IUserService extends IBaseService<User> {
      * @param user
      */
     void registerUser(User user, String code) throws BusiException;
+
+    /**
+     * 用户登录
+     * @param user
+     * @return
+     * @throws Exception
+     */
+    User userLogin(User user) throws Exception;
+
+    /**
+     * 用户手机号是否已经存在
+     * @param userPhone
+     * @return
+     */
+    boolean isUserPhone(String userPhone);
+
+    /**
+     * 更新密码
+     * @param user
+     */
+    void updatePwd(User user);
 }

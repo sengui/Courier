@@ -40,4 +40,22 @@ public class UserController extends BaseController<User> {
         userService.registerUser(user, code);
         return this.getHttpResult(ResultCode.DEFAULT_CODE);
     }
+
+    @RequestMapping("/login")
+    public HttpResult login(User user) throws Exception {
+        User userInfo = userService.userLogin(user);
+        return this.getHttpResult(ResultCode.DEFAULT_CODE, userInfo);
+    }
+
+    @RequestMapping("/isUserPhone")
+    public HttpResult isUserPhone(String userPhone) {
+        boolean result = userService.isUserPhone(userPhone);
+        return this.getHttpResult(ResultCode.DEFAULT_CODE, result);
+    }
+
+    @RequestMapping("/updatePwd")
+    public HttpResult updatePwd(User user){
+        userService.updatePwd(user);
+        return this.getHttpResult(ResultCode.DEFAULT_CODE);
+    }
 }
