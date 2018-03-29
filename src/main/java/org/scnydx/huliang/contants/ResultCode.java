@@ -16,7 +16,8 @@ public enum ResultCode {
     SYSTEM_ERROR(500, "系统错误"),
     VERIFYCODE_ERROR(501, "验证码错误"),
     NOTUSER(502, "用户不存在"),
-    PWD_ERROE(503, "密码不存在");
+    PWD_ERROE(503, "密码错误"),
+    SELECTTYPE_ERROR(505, "我的订单筛选错误");
 
 
     /**

@@ -2,6 +2,8 @@ package org.scnydx.huliang.service.impl;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
@@ -13,6 +15,8 @@ import org.scnydx.huliang.base.BaseServiceImpl;
 import org.scnydx.huliang.beans.po.Company;
 import org.scnydx.huliang.beans.po.Express;
 import org.scnydx.huliang.beans.po.Logistics;
+import org.scnydx.huliang.contants.BusiException;
+import org.scnydx.huliang.contants.ResultCode;
 import org.scnydx.huliang.dao.ICompanyDao;
 import org.scnydx.huliang.dao.IExpressDao;
 import org.scnydx.huliang.dao.ILogisticsDao;
@@ -25,6 +29,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @Author: CSG
@@ -77,6 +82,20 @@ public class ExpressServiceImpl extends BaseServiceImpl<Express> implements IExp
             } catch (Exception e) {
                 e.printStackTrace();
             }
+        }
+    }
+
+    @Override
+    public Page<Map<String, Object>> findMyExpressList(Integer userId, String userPhone, String expStatus, String selectType, int pageIndex, int pageSize) throws BusiException {
+        PageHelper.startPage(pageIndex, pageSize);
+        if ("all".equals(selectType)) {
+            return expressDao.findMyAllExpressList(userId, userPhone, expStatus);
+        } else if ("send".equals(selectType)) {
+            return expressDao.findMySendExpressList(userId, userPhone, expStatus);
+        } else if ("receive".equals(selectType)) {
+            return expressDao.findMyRecExpressList(userPhone, expStatus);
+        } else {
+            throw new BusiException(ResultCode.SELECTTYPE_ERROR);
         }
     }
 

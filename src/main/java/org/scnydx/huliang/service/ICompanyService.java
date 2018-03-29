@@ -10,4 +10,11 @@ import org.scnydx.huliang.beans.po.Company;
  * @Modify by:
  */
 public interface ICompanyService extends IBaseService<Company> {
+
+    /**
+     * 获取公司信息通过编号
+     * @param comCode
+     * @return
+     */
+    Company findByComCode(String comCode);
 }

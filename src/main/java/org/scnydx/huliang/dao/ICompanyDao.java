@@ -1,5 +1,6 @@
 package org.scnydx.huliang.dao;
 
+import org.apache.ibatis.annotations.Select;
 import org.scnydx.huliang.beans.po.Company;
 import org.scnydx.huliang.mappers.MyMapper;
 
@@ -10,4 +11,7 @@ import org.scnydx.huliang.mappers.MyMapper;
  * @Modify by:
  */
 public interface ICompanyDao extends MyMapper<Company> {
+
+    @Select("select * from tb_company where com_code = #{comCode}")
+    Company findByComCode(String comCode);
 }
