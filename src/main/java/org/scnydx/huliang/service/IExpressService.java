@@ -29,4 +29,11 @@ public interface IExpressService extends IBaseService<Express>{
      * @return
      */
     Page<Map<String, Object>> findMyExpressList(Integer userId, String userPhone,String expStatus, String selectType, int pageIndex, int pageSize) throws BusiException;
+
+    /**
+     * 获取快件详细信息
+     * @param expId
+     * @return
+     */
+    Map<String,Object> findExpressInfo(Integer expId);
 }

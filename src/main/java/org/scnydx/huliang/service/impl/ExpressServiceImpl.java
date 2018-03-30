@@ -99,6 +99,11 @@ public class ExpressServiceImpl extends BaseServiceImpl<Express> implements IExp
         }
     }
 
+    @Override
+    public Map<String, Object> findExpressInfo(Integer expId) {
+        return expressDao.findExpressInfoByExpId(expId);
+    }
+
 
     /**
      * 获取物流信息

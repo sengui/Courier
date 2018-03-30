@@ -1,9 +1,12 @@
 package org.scnydx.huliang.beans.po;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.util.Date;
 
 /**
  * @Author: CSG
@@ -25,6 +28,9 @@ public class Express {
     private String expCode;
 
     private Integer orderId;
+
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    private Date createTime;
 
     private Integer comId;
 
@@ -58,6 +64,14 @@ public class Express {
 
     public void setExpCode(String expCode) {
         this.expCode = expCode;
+    }
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
     }
 
     public Integer getOrderId() {

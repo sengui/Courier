@@ -16,21 +16,30 @@ import java.util.Map;
  */
 public interface IExpressDao extends MyMapper<Express> {
 
-    @Select("select e.*,o.send_user_name,o.rec_user_name,c.com_name,c.com_code from tb_express e " +
+    @Select("select e.*,o.send_user_name,o.rec_user_name,o.send_user_phone,o.rec_user_phone," +
+            "o.rec_user_area,o.rec_user_address,c.com_name,c.com_code from tb_express e " +
             "inner join tb_order o on e.order_id = o.order_id and e.exp_status = #{expStatus} " +
             "and (o.user_id = #{userId} or o.send_user_phone=#{userPhone}) " +
             "left join tb_company c on e.com_id = c.com_id ")
     Page<Map<String,Object>> findMySendExpressList(@Param("userId") Integer userId,@Param("userPhone") String userPhone ,@Param("expStatus") String expStatus);
 
-    @Select("select e.*,o.send_user_name,o.rec_user_name,c.com_name,c.com_code from tb_express e " +
+    @Select("select e.*,o.send_user_name,o.rec_user_name,o.send_user_phone,o.rec_user_phone," +
+            "o.rec_user_area,o.rec_user_address,c.com_name,c.com_code from tb_express e " +
             "inner join tb_order o on e.order_id = o.order_id and e.exp_status = #{expStatus} " +
             "and  o.rec_user_phone=#{userPhone} " +
             "left join tb_company c on e.com_id = c.com_id ")
     Page<Map<String,Object>> findMyRecExpressList(@Param("userPhone") String userPhone ,@Param("expStatus") String expStatus);
 
-    @Select("select e.*,o.send_user_name,o.rec_user_name,c.com_name,c.com_code from tb_express e " +
+    @Select("select e.*,o.send_user_name,o.rec_user_name,o.send_user_phone,o.rec_user_phone," +
+            "o.rec_user_area,o.rec_user_address,c.com_name,c.com_code from tb_express e " +
             "inner join tb_order o on e.order_id = o.order_id and e.exp_status = #{expStatus} " +
             "and (o.user_id = #{userId} or o.send_user_phone=#{userPhone} or o.rec_user_phone=#{userPhone}) " +
             "left join tb_company c on e.com_id = c.com_id ")
     Page<Map<String,Object>> findMyAllExpressList(@Param("userId") Integer userId,@Param("userPhone") String userPhone ,@Param("expStatus") String expStatus);
+
+    @Select("select e.*,o.send_user_name,o.send_user_phone,o.send_user_area,o.send_user_address,o.rec_user_name," +
+            "o.rec_user_phone,o.rec_user_area,o.rec_user_address,c.com_name,c.com_code from tb_express e " +
+            "inner join tb_order o on e.order_id = o.order_id " +
+            "left join tb_company c on e.com_id = c.com_id")
+    Map<String,Object> findExpressInfoByExpId(Integer expId);
 }
