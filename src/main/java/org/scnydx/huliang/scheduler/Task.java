@@ -21,10 +21,20 @@ public class Task {
     @Autowired
     private IExpressService expressService;
 
-    @Scheduled(cron = "0 0/10 * * * ?")
-    public void getLogisticsInfo() throws Exception{
-        log.info("-----------------开始执行获取快件物流信息-----------------");
-        expressService.UpdateExpLogInfo();
-        log.info("-----------------结束执行获取快件物流信息-----------------");
+    //每半小时更新正在运输快件
+    @Scheduled(cron = "0 0/30 * * * ?")
+    public void refreshRunningLogisticsInfo() throws Exception{
+        log.info("-----------------开始更新正在运输快件物流信息-----------------");
+        expressService.UpdateExpLogInfo("wait");
+        log.info("-----------------结束更新正在运输快件物流信息-----------------");
+    }
+
+
+    //每3小时更新未发出快件信息
+    @Scheduled(cron = "0 0 0/3 * * ?")
+    public void refreshWaitLogisticsInfo() throws Exception{
+        log.info("-----------------开始更新等待运输快件物流信息-----------------");
+        expressService.UpdateExpLogInfo("transit");
+        log.info("-----------------结束更新等待运输快件物流信息-----------------");
     }
 }

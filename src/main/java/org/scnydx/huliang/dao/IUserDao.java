@@ -1,5 +1,6 @@
 package org.scnydx.huliang.dao;
 
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 import org.scnydx.huliang.beans.po.User;
@@ -18,4 +19,7 @@ public interface IUserDao extends MyMapper<User> {
 
     @Update("update tb_user set user_pwd = #{userPwd} where user_phone=#{userPhone}")
     void updatePwd(User user);
+
+    @Update("update tb_user set user_photo = #{userPhoto} where user_id = #{userId}")
+    void updateUserPhoto(@Param("userId")Integer userId, @Param("userPhoto")String userPhoto);
 }

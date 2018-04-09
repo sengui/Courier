@@ -9,9 +9,14 @@ import org.scnydx.huliang.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.io.File;
 
 /**
  * @Author: CSG
@@ -57,5 +62,30 @@ public class UserController extends BaseController<User> {
     public HttpResult updatePwd(User user){
         userService.updatePwd(user);
         return this.getHttpResult(ResultCode.DEFAULT_CODE);
+    }
+
+    @RequestMapping(value = "/uploadImg", method = RequestMethod.POST)
+    public HttpResult uploadImg(HttpServletRequest request,
+                                @RequestParam("file")MultipartFile file,
+                                @RequestParam("userId")Integer userId) throws Exception{
+        if (file != null) {
+            //上传文件路径
+            String path = request.getServletContext().getRealPath("/images/");
+            //上传文件名
+            String fileName = file.getOriginalFilename();
+            String saveName = userId + "." + fileName.split("\\.")[1];
+
+            File filePath = new File(path, saveName);
+            if (!filePath.getParentFile().exists()) {
+                filePath.getParentFile().mkdir();
+            }
+            //将上传文件保存起来
+            file.transferTo(filePath);
+
+            userService.updateUserPhoto(userId, saveName);
+            return this.getHttpResult(ResultCode.DEFAULT_CODE);
+        }else {
+            return this.getHttpResult(ResultCode.SYSTEM_ERROR);
+        }
     }
 }

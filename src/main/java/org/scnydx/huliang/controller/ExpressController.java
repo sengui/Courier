@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -42,5 +43,18 @@ public class ExpressController extends BaseController<Express> {
     public HttpResult findExpressInfo(Integer expId) {
         Map<String, Object> expMap = expressService.findExpressInfo(expId);
         return  this.getHttpResult(ResultCode.DEFAULT_CODE, expMap);
+    }
+
+    @RequestMapping("/findWaitExpressList")
+    public HttpResult findWaitExpressList(@RequestParam(defaultValue = "1") int pageIndex,
+                                          @RequestParam(defaultValue = "10") int pageSize) {
+        Page<Map<String, Object>> expressList = expressService.findWaitExpressList(pageIndex, pageSize);
+        return this.getHttpResult(ResultCode.DEFAULT_CODE, expressList.toPageInfo());
+    }
+
+    @RequestMapping("/sendExpress")
+    public HttpResult sendExpress(Express express) {
+        expressService.sendExpress(express);
+        return this.getHttpResult(ResultCode.DEFAULT_CODE);
     }
 }

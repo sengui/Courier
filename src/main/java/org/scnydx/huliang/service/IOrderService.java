@@ -1,7 +1,10 @@
 package org.scnydx.huliang.service;
 
+import com.github.pagehelper.Page;
 import org.scnydx.huliang.base.IBaseService;
 import org.scnydx.huliang.beans.po.Order;
+
+import java.util.Map;
 
 /**
  * @Author: CSG
@@ -10,4 +13,15 @@ import org.scnydx.huliang.beans.po.Order;
  * @Modify by:
  */
 public interface IOrderService extends IBaseService<Order> {
+
+    /**
+     * 添加订单信息
+     * @param order
+     */
+    void insertOrder(Order order);
+
+
+
+
+
 }

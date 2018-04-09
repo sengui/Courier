@@ -25,6 +25,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -55,8 +56,8 @@ public class ExpressServiceImpl extends BaseServiceImpl<Express> implements IExp
 
     @Override
     @Transactional(rollbackFor = RuntimeException.class)
-    public void UpdateExpLogInfo() {
-        List<Express> expressList = expressDao.selectAll();
+    public void UpdateExpLogInfo(String type) {
+        List<Express> expressList = expressDao.findListByExpType(type);
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         for (Express express : expressList) {
             Company company = companyDao.selectByPrimaryKey(express.getComId());
@@ -76,7 +77,21 @@ public class ExpressServiceImpl extends BaseServiceImpl<Express> implements IExp
                             logisticsList.add(logistics);
                         }
                         logisticsDao.delLogisticsByExpId(express.getExpId());
-                        logisticsDao.insertList(logisticsList);
+                        if (logisticsList.size() > 0) {
+                            logisticsDao.insertList(logisticsList);
+                        }
+                        //等待快件
+                        if ("wait".equals(type) && data.size() > 0) {
+                            express.setExpStatus("transit");
+                            expressDao.updateByPrimaryKey(express);
+                        }else if("transit".equals(type)){
+                            JsonNode isCheck = jsonNode.path("ischeck");
+                            //已到达
+                            if ("1".equals(isCheck.asText().trim())) {
+                                express.setExpStatus("arrival");
+                                expressDao.updateByPrimaryKey(express);
+                            }
+                        }
                     }
                 }
             } catch (Exception e) {
@@ -104,6 +119,17 @@ public class ExpressServiceImpl extends BaseServiceImpl<Express> implements IExp
         return expressDao.findExpressInfoByExpId(expId);
     }
 
+    @Override
+    public Page<Map<String, Object>> findWaitExpressList(int pageIndex, int pageSize) {
+        PageHelper.startPage(pageIndex, pageSize);
+        return expressDao.findWaitExpressList();
+    }
+
+    @Override
+    @Transactional(rollbackFor = RuntimeException.class)
+    public void sendExpress(Express express) {
+        expressDao.sendExpress(express);
+    }
 
     /**
      * 获取物流信息

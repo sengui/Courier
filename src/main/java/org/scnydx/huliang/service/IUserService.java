@@ -44,4 +44,6 @@ public interface IUserService extends IBaseService<User> {
      * @param user
      */
     void updatePwd(User user);
+
+    void updateUserPhoto(Integer userId, String userPhoto);
 }

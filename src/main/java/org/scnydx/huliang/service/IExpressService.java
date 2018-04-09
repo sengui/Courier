@@ -18,7 +18,7 @@ public interface IExpressService extends IBaseService<Express>{
     /**
      * 更新物流信息
      */
-    void UpdateExpLogInfo();
+    void UpdateExpLogInfo(String type);
 
     /**
      * 获取我的订单的列表
@@ -36,4 +36,17 @@ public interface IExpressService extends IBaseService<Express>{
      * @return
      */
     Map<String,Object> findExpressInfo(Integer expId);
+
+    /**
+     * 查询代取件快递信息
+     * @return
+     */
+    Page<Map<String, Object>> findWaitExpressList(int pageIndex, int pageSize);
+
+    /**
+     * 发送快件
+     * @param express
+     */
+    void sendExpress(Express express);
+
 }

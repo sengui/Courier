@@ -1,7 +1,5 @@
 package org.scnydx.huliang.beans.po;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -9,33 +7,38 @@ import javax.persistence.Table;
 
 /**
  * @Author: CSG
- * @Description: 用户
- * @Date: Create in 10:37 2018/3/26
+ * @Description: 地址记录
+ * @Date: Create in 14:49 2018/4/2
  * @Modify by:
  */
-@Table(name = "tb_user")
-public class User {
+@Table(name = "tb_address_log")
+public class AddressLog {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer userId;
+    private Integer id;
 
     private String userName;
 
     private String userPhone;
 
-    @JsonIgnore
-    private String userPwd;
-
-    private String userInfo;
+    private String userArea;
 
     private String userAddress;
 
-    private String userPhoto;
+    private String type;
 
-    private String roleType;
+    private Integer userId;
 
     private String remark;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
     public Integer getUserId() {
         return userId;
@@ -53,28 +56,20 @@ public class User {
         this.userName = userName;
     }
 
+    public String getUserArea() {
+        return userArea;
+    }
+
+    public void setUserArea(String userArea) {
+        this.userArea = userArea;
+    }
+
     public String getUserPhone() {
         return userPhone;
     }
 
     public void setUserPhone(String userPhone) {
         this.userPhone = userPhone;
-    }
-
-    public String getUserPwd() {
-        return userPwd;
-    }
-
-    public void setUserPwd(String userPwd) {
-        this.userPwd = userPwd;
-    }
-
-    public String getUserInfo() {
-        return userInfo;
-    }
-
-    public void setUserInfo(String userInfo) {
-        this.userInfo = userInfo;
     }
 
     public String getUserAddress() {
@@ -85,20 +80,12 @@ public class User {
         this.userAddress = userAddress;
     }
 
-    public String getUserPhoto() {
-        return userPhoto;
+    public String getType() {
+        return type;
     }
 
-    public void setUserPhoto(String userPhoto) {
-        this.userPhoto = userPhoto;
-    }
-
-    public String getRoleType() {
-        return roleType;
-    }
-
-    public void setRoleType(String roleType) {
-        this.roleType = roleType;
+    public void setType(String type) {
+        this.type = type;
     }
 
     public String getRemark() {

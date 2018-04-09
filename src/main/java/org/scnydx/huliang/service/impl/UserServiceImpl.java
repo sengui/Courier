@@ -84,4 +84,10 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements IUserServi
     public void updatePwd(User user) {
         userDao.updatePwd(user);
     }
+
+    @Override
+    @Transactional(rollbackFor = RuntimeException.class)
+    public void updateUserPhoto(Integer userId, String userPhoto) {
+        userDao.updateUserPhoto(userId, userPhoto);
+    }
 }
