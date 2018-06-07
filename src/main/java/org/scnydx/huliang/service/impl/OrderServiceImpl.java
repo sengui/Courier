@@ -8,7 +8,10 @@ import org.scnydx.huliang.beans.po.Order;
 import org.scnydx.huliang.dao.IExpressDao;
 import org.scnydx.huliang.dao.IOrderDao;
 import org.scnydx.huliang.service.IOrderService;
+import org.scnydx.huliang.service.ISendSmsService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
@@ -23,6 +26,7 @@ import java.util.Map;
  */
 @Service
 @Transactional(readOnly = true)
+@PropertySource(value = "classpath:default-params.properties", encoding = "UTF-8")
 public class OrderServiceImpl extends BaseServiceImpl<Order> implements IOrderService {
 
     @Autowired
@@ -31,10 +35,17 @@ public class OrderServiceImpl extends BaseServiceImpl<Order> implements IOrderSe
     @Autowired
     private IExpressDao expressDao;
 
+    @Autowired
+    private ISendSmsService sendSmsService;
+
+    @Value("${my.sms.adminPhone}")
+    private String adminPhone;
+
     @Override
     @Transactional(rollbackFor = RuntimeException.class)
     public void insertOrder(Order order) {
         orderDao.insertUseKey(order);
+        sendSmsService.sendAdviceSms(adminPhone,order.getSendUserName(), order.getSendUserPhone(), order.getSendUserArea() + " " + order.getSendUserAddress());
         if (!StringUtils.isEmpty(order.getUserId())) {
             Express express = new Express();
             express.setOrderId(order.getOrderId());

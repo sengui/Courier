@@ -43,6 +43,8 @@ public interface IExpressService extends IBaseService<Express>{
      */
     Page<Map<String, Object>> findWaitExpressList(int pageIndex, int pageSize);
 
+    Page<Map<String, Object>> findAllExpressPage(int pageIndex, int pageSize);
+
     /**
      * 发送快件
      * @param express

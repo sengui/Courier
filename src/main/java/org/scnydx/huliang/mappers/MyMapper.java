@@ -5,6 +5,8 @@ import org.apache.ibatis.annotations.SelectProvider;
 import tk.mybatis.mapper.common.Mapper;
 import tk.mybatis.mapper.common.MySqlMapper;
 
+import java.util.List;
+
 /**
  * @Author: CSG
  * @Description: 自定义的mapper 通用类
@@ -23,5 +25,17 @@ public interface MyMapper<T> extends Mapper<T>, MySqlMapper<T>{
            method = "dynamicSQL"
    )
    Page<T> selectAllPage();
+
+   @SelectProvider(
+           type = MySelectProvider.class,
+           method = "dynamicSQL"
+   )
+   Page<T> selectByFilterPage(T t);
+
+   @SelectProvider(
+           type = MySelectProvider.class,
+           method = "dynamicSQL"
+   )
+   List<T> selectByFilter(T t);
 
 }

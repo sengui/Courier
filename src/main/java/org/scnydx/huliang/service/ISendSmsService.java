@@ -14,4 +14,13 @@ public interface ISendSmsService {
      * @param code
      */
     void sendVerifyCodeSms(String phoneNum, String code);
+
+    /**
+     * 发送寄件信息
+     * @param phoneNum
+     * @param user
+     * @param phone
+     * @param address
+     */
+    void sendAdviceSms(String phoneNum, String user, String phone, String address);
 }

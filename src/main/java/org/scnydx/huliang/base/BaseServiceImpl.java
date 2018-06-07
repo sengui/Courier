@@ -6,6 +6,9 @@ import org.scnydx.huliang.mappers.MyMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import java.lang.reflect.Field;
 import java.util.List;
 
 /**
@@ -41,6 +44,16 @@ public class BaseServiceImpl<T> implements IBaseService<T>{
         return myMapper.insertUseGeneratedKeys(t);
     }
 
+    @Override
+    @Transactional(rollbackFor = RuntimeException.class)
+    public void saveOrUpdate(T t) {
+        if (isUpdate(t)) {
+            update(t);
+        }else{
+            insert(t);
+        }
+    }
+
     /**
      * 更新
      * @param t
@@ -48,7 +61,7 @@ public class BaseServiceImpl<T> implements IBaseService<T>{
     @Override
     @Transactional(rollbackFor = RuntimeException.class)
     public void update(T t) {
-        myMapper.updateByPrimaryKey(t);
+        myMapper.updateByPrimaryKeySelective(t);
     }
 
     /**
@@ -100,5 +113,55 @@ public class BaseServiceImpl<T> implements IBaseService<T>{
     public Page<T> findAllByPage(int pageIndex, int pageSize) {
         PageHelper.startPage(pageIndex, pageSize);
         return myMapper.selectAllPage();
+    }
+
+    @Override
+    public Page<T> findInfoPage(int pageIndex, int pageSize, T t) {
+        PageHelper.startPage(pageIndex, pageSize);
+        return myMapper.selectByFilterPage(t);
+    }
+
+    /**
+     * 判断model 对象是否是更新
+     * @param t
+     * @return
+     */
+    protected boolean isUpdate(T t) {
+        Class clazz = t.getClass();
+        Field[] fields = clazz.getDeclaredFields();
+        for (Field field : fields) {
+
+            //自增主键判断是否为空
+            if (field.isAnnotationPresent(Id.class) && field.isAnnotationPresent(GeneratedValue.class)) {
+                field.setAccessible(true);
+                try {
+                    Object obj = field.get(t);
+                    if(obj == null){
+                        return false;
+                    }else{
+                        return true;
+                    }
+                } catch (IllegalAccessException e) {
+                    e.printStackTrace();
+                }
+            }
+            //自维护主键判断数据库存不存在
+            else if (field.isAnnotationPresent(Id.class)){
+                field.setAccessible(true);
+                try {
+                    Object obj = field.get(t);
+
+                    Object tObj = findById(obj);
+                    if(tObj == null){
+                        return false;
+                    }else{
+                        return true;
+                    }
+                } catch (IllegalAccessException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return false;
     }
 }

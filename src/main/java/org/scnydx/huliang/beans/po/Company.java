@@ -1,5 +1,7 @@
 package org.scnydx.huliang.beans.po;
 
+import org.scnydx.huliang.mappers.Like;
+
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -18,6 +20,7 @@ public class Company {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer comId;
 
+    @Like
     private String comName;
 
     private String comInfo;

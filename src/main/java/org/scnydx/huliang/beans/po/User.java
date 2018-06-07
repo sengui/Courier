@@ -1,6 +1,7 @@
 package org.scnydx.huliang.beans.po;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.scnydx.huliang.mappers.Like;
 
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -20,6 +21,7 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer userId;
 
+    @Like
     private String userName;
 
     private String userPhone;
@@ -28,6 +30,8 @@ public class User {
     private String userPwd;
 
     private String userInfo;
+
+    private String userArea;
 
     private String userAddress;
 
@@ -75,6 +79,14 @@ public class User {
 
     public void setUserInfo(String userInfo) {
         this.userInfo = userInfo;
+    }
+
+    public String getUserArea() {
+        return userArea;
+    }
+
+    public void setUserArea(String userArea) {
+        this.userArea = userArea;
     }
 
     public String getUserAddress() {

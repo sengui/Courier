@@ -25,6 +25,8 @@ public class Suggest {
 
     private Date createTime;
 
+    private String sugStatus;
+
     private Integer userId;
 
     private String remark;
@@ -59,6 +61,14 @@ public class Suggest {
 
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
+    }
+
+    public String getSugStatus() {
+        return sugStatus;
+    }
+
+    public void setSugStatus(String sugStatus) {
+        this.sugStatus = sugStatus;
     }
 
     public Integer getUserId() {

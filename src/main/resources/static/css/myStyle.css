@@ -1,0 +1,51 @@
+@CHARSET "UTF-8";
+.breadcrumb{
+	line-height: 41px;
+}
+
+.openForm{
+	display: none;
+	padding: 20px 10px;
+	min-width: 800px;
+}
+.openForm .layui-form-label{
+	width: 160px;
+}
+.openForm .layui-form-item{
+	margin-bottom: 10px;
+}
+.openForm .layui-input-block{
+	margin-left: 160px;
+}
+.openForm .layui-textarea{
+	min-height: 200px;
+}
+.layui-layer .layui-layer-btn{
+	text-align: center;
+}
+.openForm input[type="text"]{
+	margin-left: 0;
+}
+.openForm input[readonly]{
+	background: #fff;
+	color: #000;
+}
+.border{
+	margin-bottom: 0;
+}
+.table tbody > tr > td{
+	padding: 3px;
+}
+.text-danger{
+	color: red !important;
+}
+
+.table tr td .ace{
+	display: none;
+}
+.layui-layer input[type="text"],.layui-layer textarea{
+	color:#333 !important;
+}
+.userAuth{
+	display: none;
+}

@@ -27,6 +27,12 @@ public interface IBaseService<T> {
      int insertKey(T t);
 
     /**
+     * 添加或修改
+     * @param t
+     */
+    void saveOrUpdate(T t);
+
+    /**
      * 更新
      * @param t
      */
@@ -64,4 +70,6 @@ public interface IBaseService<T> {
      * @return
      */
      Page<T> findAllByPage(int pageIndex, int pageSize);
+
+     Page<T> findInfoPage(int pageIndex, int pageSize, T t);
 }

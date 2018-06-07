@@ -126,6 +126,12 @@ public class ExpressServiceImpl extends BaseServiceImpl<Express> implements IExp
     }
 
     @Override
+    public Page<Map<String, Object>> findAllExpressPage(int pageIndex, int pageSize) {
+        PageHelper.startPage(pageIndex, pageSize);
+        return expressDao.findAllExpressPage();
+    }
+
+    @Override
     @Transactional(rollbackFor = RuntimeException.class)
     public void sendExpress(Express express) {
         expressDao.sendExpress(express);

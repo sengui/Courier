@@ -45,9 +45,16 @@ public interface IExpressDao extends MyMapper<Express> {
             "left join tb_company c on e.com_id = c.com_id")
     Map<String,Object> findExpressInfoByExpId(Integer expId);
 
-    @Select("select e.*,o.send_user_name,o.send_user_phone,o.send_user_area,o.send_user_address from tb_express e " +
+    @Select("select e.*,o.send_user_name,o.send_user_phone,o.send_user_area,o.send_user_address," +
+            "o.rec_user_name,o.rec_user_phone,o.rec_user_area,o.rec_user_address from tb_express e " +
             "inner join tb_order o on e.order_id = o.order_id and e.exp_status = 'wait'")
     Page<Map<String, Object>> findWaitExpressList();
+
+    @Select("select e.*,o.send_user_name,o.send_user_phone,o.send_user_area,o.send_user_address," +
+            "o.rec_user_name,o.rec_user_phone,o.rec_user_area,o.rec_user_address,c.com_name from tb_express e " +
+            "inner join tb_order o on e.order_id = o.order_id and (e.exp_status = 'arrival' or e.exp_status = 'transit' ) " +
+            "inner join tb_company c on e.com_id = c.com_id")
+    Page<Map<String, Object>> findAllExpressPage();
 
     @Update("update tb_express set exp_status = 'transit', exp_code = #{expCode}, com_id = #{comId} " +
             "where exp_id = #{expId}")

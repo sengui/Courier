@@ -39,6 +39,12 @@ public class BaseController<T> {
         return getHttpResult(ResultCode.INSERT_CODE);
     }
 
+    @RequestMapping("/saveOrUpdate")
+    public HttpResult saveOrUpdate(T t) {
+        baseService.saveOrUpdate(t);
+        return getHttpResult(ResultCode.DEFAULT_CODE);
+    }
+
     /**
      * 添加信息
      * @param t
@@ -79,6 +85,13 @@ public class BaseController<T> {
     public HttpResult findAll() {
         List<T> list = baseService.findAll();
         return getHttpResult(ResultCode.DEFAULT_CODE, list);
+    }
+
+    @RequestMapping("/findInfoPage")
+    public HttpResult findInfoPage(@RequestParam(defaultValue = "1") int pageIndex,
+                                   @RequestParam(defaultValue = "10") int pageSize, T t) {
+        Page<T> page = baseService.findInfoPage(pageIndex, pageSize, t);
+        return getHttpResult(ResultCode.DEFAULT_CODE, page.toPageInfo());
     }
 
     /**

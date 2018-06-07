@@ -52,6 +52,13 @@ public class ExpressController extends BaseController<Express> {
         return this.getHttpResult(ResultCode.DEFAULT_CODE, expressList.toPageInfo());
     }
 
+    @RequestMapping("/findAllExpressPage")
+    public HttpResult findAllExpressPage(@RequestParam(defaultValue = "1")int pageIndex,
+                                         @RequestParam(defaultValue = "10")int pageSize) {
+        Page<Map<String, Object>> expressPage = expressService.findAllExpressPage(pageIndex, pageSize);
+        return this.getHttpResult(ResultCode.DEFAULT_CODE, expressPage.toPageInfo());
+    }
+
     @RequestMapping("/sendExpress")
     public HttpResult sendExpress(Express express) {
         expressService.sendExpress(express);

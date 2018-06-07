@@ -2,6 +2,7 @@ package org.scnydx.huliang.service;
 
 import org.scnydx.huliang.base.IBaseService;
 import org.scnydx.huliang.beans.po.User;
+import org.scnydx.huliang.beans.vo.VUser;
 import org.scnydx.huliang.contants.BusiException;
 
 /**
@@ -46,4 +47,6 @@ public interface IUserService extends IBaseService<User> {
     void updatePwd(User user);
 
     void updateUserPhoto(Integer userId, String userPhoto);
+
+    String login(VUser user);
 }

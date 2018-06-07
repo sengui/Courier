@@ -3,6 +3,7 @@ package org.scnydx.huliang.service.impl;
 import org.scnydx.huliang.base.BaseServiceImpl;
 import org.scnydx.huliang.beans.dto.VerifyCode;
 import org.scnydx.huliang.beans.po.User;
+import org.scnydx.huliang.beans.vo.VUser;
 import org.scnydx.huliang.contants.BusiException;
 import org.scnydx.huliang.contants.Contants;
 import org.scnydx.huliang.contants.ResultCode;
@@ -40,7 +41,7 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements IUserServi
     public void sendVerifyCode(String userPhone) {
         String code = Utils.getVerifyCode();
         redisTemplate.opsForValue().set(Contants.VERIFYCODE_PREFIX + userPhone, code,Contants.VERIFYCODE_EXPIRE, TimeUnit.MINUTES);
-        //sendSmsService.sendVerifyCodeSms(userPhone,code );
+        sendSmsService.sendVerifyCodeSms(userPhone,code );
         System.out.println("验证码：" + code);
     }
 
@@ -89,5 +90,19 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements IUserServi
     @Transactional(rollbackFor = RuntimeException.class)
     public void updateUserPhoto(Integer userId, String userPhoto) {
         userDao.updateUserPhoto(userId, userPhoto);
+    }
+
+    @Override
+    public String login(VUser user) {
+        User userInfo = userDao.findByUserPhone(user.getUserId());
+        if (userInfo == null) {
+            return "用户不存在";
+        }
+
+        if (!user.getUserPwd().equals(userInfo.getUserPwd())) {
+            return "用户密码不正确";
+        }
+
+        return "success";
     }
 }

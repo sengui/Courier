@@ -35,8 +35,11 @@ public class SendSmsServiceImpl implements ISendSmsService {
     /**
      * 模块编号
      */
-    @Value("${aliyun.sms.verifycode.template}")
-    private String templateCode;
+    @Value("${aliyun.sms.verifycode.verifyTemplate}")
+    private String verifyTemplateCode;
+
+    @Value("${aliyun.sms.verifycode.adviceTemplate}")
+    private String adviceTemplateCode;
 
     private static ThreadPoolExecutor executor;
 
@@ -51,7 +54,13 @@ public class SendSmsServiceImpl implements ISendSmsService {
 
     @Override
     public void sendVerifyCodeSms(String phoneNum, String code) {
-        SendSmsThread sendSmsThread = new SendSmsThread(accessKeyId, accessKeySecret, phoneNum, signName, templateCode, "{ \"code\":\""+ code +"\"}");
+        SendSmsThread sendSmsThread = new SendSmsThread(accessKeyId, accessKeySecret, phoneNum, signName, verifyTemplateCode, "{ \"code\":\""+ code +"\"}");
         this.getExecutor().submit(sendSmsThread);
     }
+
+    @Override
+    public void sendAdviceSms(String phoneNum, String user, String phone, String address) {
+        SendSmsThread sendSmsThread = new SendSmsThread(accessKeyId, accessKeySecret, phoneNum, signName, adviceTemplateCode, "{ \"user\":\""+ user +"\",\"phone\":\""+ phone +"\",\"address\":\""+ address +"\"}");
+        this.getExecutor().submit(sendSmsThread);
+}
 }
